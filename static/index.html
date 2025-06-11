@@ -1,0 +1,136 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Trang Đọc Truyện</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="./image/logo2.2.png" alt="Logo">
+            </a>
+        </div>
+        <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-left">
+            <a href="categories.html">Thể Loại</a>
+            <a href="new.html">Truyện Mới</a>
+            <a href="ranking.html">Xếp Hạng</a>
+            <a href="upload.html">Đăng Truyện</a>
+            <div class="dropdown">
+                <span class="dropdown-toggle">Tác Giả <i class="fas fa-chevron-down"></i></span>
+                <div class="dropdown-menu">
+                    <a href="#">Tác Giả Nổi Bật</a>
+                    <a href="#">Tác Giả Mới</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <input type="text" placeholder="Tìm kiếm truyện...">
+            <a href="auth.html" class="nav-btn">Đăng Nhập</a>
+            <a href="auth.html" class="nav-btn">Đăng Ký</a>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <!-- Featured Novels Carousel -->
+        <section class="featured-novels">
+            <div class="carousel">
+                <div class="carousel-inner">
+                    <div class="carousel-item active">
+                        <img src="./image/anh-anime-cuc-dep.jpg" alt="Truyện 1">
+                        <div class="carousel-caption">
+                            <h3>Tokyo Ghoul</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./image/jujutsu-kaisen-rotated.jpg" alt="Truyện 2">
+                        <div class="carousel-caption">
+                            <h3>Jujutsu Kaisen</h3>
+                        </div>
+                    </div>
+                    <div class="carousel-item">
+                        <img src="./image/hinh-nen-anime-3.jpg" alt="Truyện 3">
+                        <div class="carousel-caption">
+                            <h3>Tháng 4 Là Lời Nói Dối Của Em</h3>
+                        </div>
+                    </div>
+                </div>
+                <button class="carousel-control prev">
+                    <i class="fas fa-chevron-left"></i>
+                </button>
+                <button class="carousel-control next">
+                    <i class="fas fa-chevron-right"></i>
+                </button>
+                <div class="carousel-indicators">
+                    <span class="active"></span>
+                    <span></span>
+                    <span></span>
+                </div>
+            </div>
+        </section>
+
+        <!-- Recommended Novels -->
+        <section class="recommended-novels">
+            <div class="section-header">
+                <h2>Truyện Đề Cử</h2>
+            </div>
+            <div class="novels-grid">
+                <!-- Novel items will be added dynamically -->
+            </div>
+        </section>
+
+        <!-- Hot Novels -->
+        <section class="hot-novels">
+            <div class="section-header">
+                <h2>Truyện Hot</h2>
+            </div>
+            <div class="novels-grid">
+                <!-- Novel items will be added dynamically -->
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Về Chúng Tôi</h3>
+                <p>Website đọc truyện online với nhiều thể loại truyện phong phú.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Kết</h3>
+                <ul>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Theo Dõi</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Trang Đọc Truyện. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+</body>
+</html>

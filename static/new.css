@@ -1,0 +1,222 @@
+.new-novels-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+.new-novels-container h1 {
+    text-align: center;
+    margin-bottom: 2rem;
+    color: #333;
+}
+
+/* Bộ lọc */
+.novel-filters {
+    display: flex;
+    gap: 2rem;
+    margin-bottom: 2rem;
+    padding: 1rem;
+    background: white;
+    border-radius: 8px;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+}
+
+.filter-group {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.filter-group label {
+    font-weight: 500;
+    color: #333;
+}
+
+.filter-group select {
+    padding: 0.5rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    min-width: 150px;
+}
+
+/* Grid truyện */
+.novels-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+.novel-item {
+    background: white;
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+    transition: transform 0.3s;
+}
+
+.novel-item:hover {
+    transform: translateY(-5px);
+}
+
+.novel-item img {
+    width: 100%;
+    height: 300px;
+    object-fit: cover;
+}
+
+.novel-info {
+    padding: 1rem;
+}
+
+.novel-info h3 {
+    margin: 0 0 0.5rem;
+    font-size: 1.1rem;
+    color: #333;
+}
+
+.novel-info .author {
+    color: #666;
+    font-size: 0.9rem;
+    margin-bottom: 0.5rem;
+}
+
+.novel-info .stats {
+    display: flex;
+    gap: 1rem;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+.novel-info .stats i {
+    color: #ff6b6b;
+}
+
+/* Phân trang */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.page-numbers span {
+    width: 35px;
+    height: 35px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 4px;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.page-numbers span.current {
+    background: #ff6b6b;
+    color: white;
+}
+
+.page-numbers span:not(.current):hover {
+    background: #f8f9fa;
+}
+
+.prev-page,
+.next-page {
+    padding: 0.5rem 1rem;
+    border: 1px solid #ddd;
+    border-radius: 4px;
+    background: white;
+    cursor: pointer;
+    transition: all 0.3s;
+}
+
+.prev-page:disabled,
+.next-page:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.prev-page:not(:disabled):hover,
+.next-page:not(:disabled):hover {
+    background: #f8f9fa;
+}
+
+/* Dark Mode */
+body.dark-mode .new-novels-container h1 {
+    color: #fff;
+}
+
+body.dark-mode .novel-filters {
+    background: #1a1a1a;
+}
+
+body.dark-mode .filter-group label {
+    color: #fff;
+}
+
+body.dark-mode .filter-group select {
+    background: #333;
+    border-color: #444;
+    color: #fff;
+}
+
+body.dark-mode .novel-item {
+    background: #1a1a1a;
+}
+
+body.dark-mode .novel-info h3 {
+    color: #fff;
+}
+
+body.dark-mode .novel-info .author,
+body.dark-mode .novel-info .stats {
+    color: #ddd;
+}
+
+body.dark-mode .page-numbers span:not(.current):hover {
+    background: #333;
+}
+
+body.dark-mode .prev-page,
+body.dark-mode .next-page {
+    background: #1a1a1a;
+    border-color: #444;
+    color: #fff;
+}
+
+body.dark-mode .prev-page:not(:disabled):hover,
+body.dark-mode .next-page:not(:disabled):hover {
+    background: #333;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .novel-filters {
+        flex-direction: column;
+        gap: 1rem;
+    }
+
+    .filter-group {
+        width: 100%;
+    }
+
+    .filter-group select {
+        flex: 1;
+    }
+
+    .novels-grid {
+        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
+        gap: 1rem;
+    }
+
+    .novel-item img {
+        height: 225px;
+    }
+} 

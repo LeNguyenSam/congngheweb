@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truyện Mới - ThichTruyenChu</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="new.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Thanh điều hướng -->
+    <nav class="nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="image/logo2.2.png" alt="Logo">
+            </a>
+        </div>
+        <div class="nav-left">
+            <div class="dropdown">
+                <a href="categories.html" class="dropdown-toggle">THỂ LOẠI</a>
+                <div class="dropdown-menu">
+                    <a href="categories.html?type=tinh-cam">Tình Cảm</a>
+                    <a href="categories.html?type=kinh-di">Kinh Dị</a>
+                    <a href="categories.html?type=hai-huoc">Hài Hước</a>
+                    <a href="categories.html?type=vo-hiep">Võ Hiệp</a>
+                </div>
+            </div>
+            <a href="new.html" class="active">TRUYỆN MỚI</a>
+            <a href="ranking.html">BXH</a>
+            <a href="upload.html">ĐĂNG TRUYỆN</a>
+            <a href="donate.html">DONATE/VIP</a>
+        </div>
+        <div class="nav-right">
+            <input type="text" placeholder="Tìm truyện...">
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="auth.html" class="nav-btn">ĐĂNG NHẬP</a>
+            <a href="auth.html" class="nav-btn">ĐĂNG KÝ</a>
+        </div>
+    </nav>
+
+    <!-- Nội dung chính -->
+    <div class="new-novels-container">
+        <h1>TRUYỆN MỚI CẬP NHẬT</h1>
+        
+        <!-- Bộ lọc -->
+        <div class="novel-filters">
+            <div class="filter-group">
+                <label>Sắp xếp theo:</label>
+                <select id="sort-by">
+                    <option value="latest">Mới nhất</option>
+                    <option value="views">Lượt xem</option>
+                    <option value="rating">Đánh giá</option>
+                </select>
+            </div>
+            <div class="filter-group">
+                <label>Thể loại:</label>
+                <select id="category">
+                    <option value="all">Tất cả</option>
+                    <option value="tinh-cam">Tình Cảm</option>
+                    <option value="kinh-di">Kinh Dị</option>
+                    <option value="hai-huoc">Hài Hước</option>
+                    <option value="vo-hiep">Võ Hiệp</option>
+                </select>
+            </div>
+        </div>
+
+        <!-- Danh sách truyện -->
+        <div class="novels-grid">
+            <!-- Truyện sẽ được thêm vào đây bằng JavaScript -->
+        </div>
+
+        <!-- Phân trang -->
+        <div class="pagination">
+            <button class="prev-page" disabled>Trang trước</button>
+            <div class="page-numbers">
+                <span class="current">1</span>
+                <span>2</span>
+                <span>3</span>
+                <span>...</span>
+                <span>10</span>
+            </div>
+            <button class="next-page">Trang sau</button>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Về ThichTruyenChu</h3>
+                <p>Website đọc truyện chữ online với đầy đủ các thể loại truyện.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Kết</h3>
+                <ul>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Theo Dõi Chúng Tôi</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 ThichTruyenChu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="new.js"></script>
+</body>
+</html> 

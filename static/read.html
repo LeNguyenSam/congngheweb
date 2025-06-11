@@ -1,0 +1,159 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Đọc Truyện</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="read.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="./image/logo2.2.png" alt="Logo">
+            </a>
+        </div>
+        <button class="mobile-menu-toggle">
+            <i class="fas fa-bars"></i>
+        </button>
+        <div class="nav-left">
+            <a href="categories.html">Thể Loại</a>
+            <a href="new.html">Truyện Mới</a>
+            <a href="ranking.html">Xếp Hạng</a>
+            <div class="dropdown">
+                <span class="dropdown-toggle">Tác Giả <i class="fas fa-chevron-down"></i></span>
+                <div class="dropdown-menu">
+                    <a href="#">Tác Giả Nổi Bật</a>
+                    <a href="#">Tác Giả Mới</a>
+                </div>
+            </div>
+        </div>
+        <div class="nav-right">
+            <input type="text" placeholder="Tìm kiếm truyện...">
+            <a href="auth.html" class="nav-btn">Đăng Nhập</a>
+            <a href="auth.html" class="nav-btn">Đăng Ký</a>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="container">
+        <div class="read-container">
+            <!-- Novel Info -->
+            <div class="novel-info">
+                <div class="novel-header">
+                    <h1>Tên Truyện</h1>
+                    <div class="novel-meta">
+                        <span><i class="fas fa-user"></i> Tác giả</span>
+                        <span><i class="fas fa-eye"></i> 1.2M lượt xem</span>
+                        <span><i class="fas fa-star"></i> 4.5/5</span>
+                    </div>
+                </div>
+                <div class="chapter-selector">
+                    <button class="prev-chapter" disabled>
+                        <i class="fas fa-chevron-left"></i> Chương trước
+                    </button>
+                    <select id="chapterSelect">
+                        <option value="1">Chương 1</option>
+                        <option value="2">Chương 2</option>
+                        <option value="3">Chương 3</option>
+                    </select>
+                    <button class="next-chapter">
+                        Chương sau <i class="fas fa-chevron-right"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Reading Area -->
+            <div class="reading-area">
+                <div class="chapter-content">
+                    <!-- Chapter content will be loaded here -->
+                    <p>Nội dung chương truyện sẽ được hiển thị ở đây...</p>
+                </div>
+            </div>
+
+            <!-- Reading Controls -->
+            <div class="reading-controls">
+                <div class="control-group">
+                    <button class="font-size-btn" data-action="decrease">
+                        <i class="fas fa-minus"></i>
+                    </button>
+                    <button class="font-size-btn" data-action="increase">
+                        <i class="fas fa-plus"></i>
+                    </button>
+                </div>
+                <div class="control-group">
+                    <button class="theme-btn" data-theme="light">
+                        <i class="fas fa-sun"></i>
+                    </button>
+                    <button class="theme-btn" data-theme="dark">
+                        <i class="fas fa-moon"></i>
+                    </button>
+                    <button class="theme-btn" data-theme="sepia">
+                        <i class="fas fa-book"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Chapter Navigation -->
+            <div class="chapter-navigation">
+                <button class="prev-chapter" disabled>
+                    <i class="fas fa-chevron-left"></i> Chương trước
+                </button>
+                <button class="next-chapter">
+                    Chương sau <i class="fas fa-chevron-right"></i>
+                </button>
+            </div>
+
+            <!-- Comments Section -->
+            <div class="comments-section">
+                <h2>Bình luận</h2>
+                <div class="comment-form">
+                    <textarea placeholder="Viết bình luận của bạn..."></textarea>
+                    <button class="submit-comment">Gửi</button>
+                </div>
+                <div class="comments-list">
+                    <!-- Comments will be loaded here -->
+                </div>
+            </div>
+        </div>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Về Chúng Tôi</h3>
+                <p>Website đọc truyện online với nhiều thể loại truyện phong phú.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Kết</h3>
+                <ul>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Theo Dõi</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-instagram"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 Trang Đọc Truyện. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="read.js"></script>
+</body>
+</html> 

@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thêm Truyện Mới</title>
+    <link rel="stylesheet" href="../static/upload.css">
+</head>
+<body>
+    <div>
+        <h1>Thêm Thông Tin Truyện</h1>
+        <h2>Chi Tiết Truyện</h2>
+        <form id="addStoryForm">
+            <div class="form-group">
+                <label>Thêm trang bìa <span style="color: #888;"></span></label>
+                <div class="image-upload">
+                    <div class="image-placeholder" id="imagePreview"></div>
+                    <input type="file" accept="image/*" id="imageInput" onchange="previewImage(event)">
+                </div>
+            </div>
+            <div class="form-group">
+                <label>Tiêu đề</label>
+                <input type="text" placeholder="Tên truyện" required>
+            </div>
+            <div class="form-group">
+                <label>Mô tả <span style="color: #888;"></span></label>
+                <textarea placeholder="Mô tả nội dung truyện..." required></textarea>
+            </div>
+            <div class="form-group">
+                <label>Thể loại <span style="color: #888;"></span></label>
+                <div class="tag-group">
+                    <label><input type="checkbox" name="tags" value="Ngôn tình"> Ngôn tình</label>
+                    <label><input type="checkbox" name="tags" value="Huyền huyễn"> Huyền huyễn</label>
+                    <label><input type="checkbox" name="tags" value="Khoa học viễn tưởng"> Khoa học viễn tưởng</label>
+                    <label><input type="checkbox" name="tags" value="Kinh dị"> Kinh dị</label>
+                </div>
+            </div>
+            <div class="buttons">
+                <button type="button" class="cancel">Hủy</button>
+                <button type="submit" class="submit">Xác nhận</button>
+            </div>
+        </form>
+    </div>
+    <script src ="upload.js"></script>
+</body>
+</html>

@@ -1,0 +1,103 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Thể Loại - ThichTruyenChu</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="categories.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Thanh điều hướng -->
+    <nav class="nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="image/logo2.2.png" alt="Logo">
+            </a>
+        </div>
+        <div class="nav-left">
+            <div class="dropdown">
+                <a href="categories.html" class="dropdown-toggle active">THỂ LOẠI</a>
+                <div class="dropdown-menu">
+                    <a href="categories.html?type=tinh-cam">Tình Cảm</a>
+                    <a href="categories.html?type=kinh-di">Kinh Dị</a>
+                    <a href="categories.html?type=hai-huoc">Hài Hước</a>
+                    <a href="categories.html?type=vo-hiep">Võ Hiệp</a>
+                </div>
+            </div>
+            <a href="new.html">Truyện Mới</a>
+            <a href="ranking.html">Xếp Hạng</a>
+            <a href="upload.html">Đăng Truyện</a>
+        </div>
+        <div class="nav-right">
+            <input type="text" placeholder="Tìm truyện...">
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+            <a href="auth.html" class="nav-btn">ĐĂNG NHẬP</a>
+            <a href="auth.html" class="nav-btn">ĐĂNG KÝ</a>
+        </div>
+    </nav>
+
+    <!-- Nội dung chính -->
+    <div class="categories-container">
+        <h1>THỂ LOẠI TRUYỆN</h1>
+        <div class="categories-grid">
+            <a href="categories.html?type=tinh-cam" class="category-card">
+                <i class="fas fa-heart"></i>
+                <h3>Tình Cảm</h3>
+                <p>1,234 truyện</p>
+            </a>
+            <a href="categories.html?type=kinh-di" class="category-card">
+                <i class="fas fa-ghost"></i>
+                <h3>Kinh Dị</h3>
+                <p>567 truyện</p>
+            </a>
+            <a href="categories.html?type=hai-huoc" class="category-card">
+                <i class="fas fa-laugh"></i>
+                <h3>Hài Hước</h3>
+                <p>890 truyện</p>
+            </a>
+            <a href="categories.html?type=vo-hiep" class="category-card">
+                <i class="fas fa-fist-raised"></i>
+                <h3>Võ Hiệp</h3>
+                <p>1,567 truyện</p>
+            </a>
+            <!-- Thêm các thể loại khác -->
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-section">
+                <h3>Về ThichTruyenChu</h3>
+                <p>Website đọc truyện chữ online với đầy đủ các thể loại truyện.</p>
+            </div>
+            <div class="footer-section">
+                <h3>Liên Kết</h3>
+                <ul>
+                    <li><a href="#">Điều Khoản Sử Dụng</a></li>
+                    <li><a href="#">Chính Sách Bảo Mật</a></li>
+                    <li><a href="#">Liên Hệ</a></li>
+                </ul>
+            </div>
+            <div class="footer-section">
+                <h3>Theo Dõi Chúng Tôi</h3>
+                <div class="social-links">
+                    <a href="#"><i class="fab fa-facebook"></i></a>
+                    <a href="#"><i class="fab fa-twitter"></i></a>
+                    <a href="#"><i class="fab fa-discord"></i></a>
+                </div>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2024 ThichTruyenChu. All rights reserved.</p>
+        </div>
+    </footer>
+
+    <script src="script.js"></script>
+    <script src="categories.js"></script>
+</body>
+</html> 
