@@ -134,6 +134,41 @@ document.addEventListener('DOMContentLoaded', function() {
 
     // Initialize novels data from server
     initializeNovels();
+
+    // User authentication state management
+    const authButtons = document.querySelector('.auth-buttons');
+    const userProfile = document.querySelector('.user-profile');
+    const logoutBtn = document.getElementById('logout-btn');
+
+    // Check if user is logged in
+    function checkAuthState() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        if (user) {
+            if (authButtons) authButtons.style.display = 'none';
+            if (userProfile) userProfile.style.display = 'block';
+            // Update avatar if user has one
+            const avatarImg = userProfile ? userProfile.querySelector('.user-avatar img') : null;
+            if (avatarImg && user.avatar) {
+                avatarImg.src = user.avatar;
+            }
+        } else {
+            if (authButtons) authButtons.style.display = 'flex';
+            if (userProfile) userProfile.style.display = 'none';
+        }
+    }
+
+    // Handle logout
+    if (logoutBtn) {
+        logoutBtn.addEventListener('click', function(e) {
+            e.preventDefault();
+            localStorage.removeItem('user');
+            checkAuthState();
+            window.location.href = '/';
+        });
+    }
+
+    // Check auth state on page load
+    checkAuthState();
 });
 
 function initializeNovels() {
@@ -217,4 +252,38 @@ function createNovelElement(novel) {
         </a>
     `;
     return div;
+}
+
+function showSlide(index) {
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
+        const items = carousel.querySelectorAll('.carousel-item');
+        const indicators = carousel.querySelectorAll('.carousel-indicators span');
+        items.forEach(item => item.classList.remove('active'));
+        indicators.forEach(indicator => indicator.classList.remove('active'));
+        
+        items[index].classList.add('active');
+        indicators[index].classList.add('active');
+    }
+}
+
+function stopAutoSlide() {
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
+        clearInterval(carousel.interval);
+    }
+}
+
+function startAutoSlide() {
+    const carousel = document.querySelector('.carousel');
+    if (carousel) {
+        carousel.interval = setInterval(() => {
+            let currentIndex = Array.from(carousel.querySelectorAll('.carousel-item')).findIndex(item => item.classList.contains('active'));
+            let nextIndex = currentIndex + 1;
+            if (nextIndex >= carousel.querySelectorAll('.carousel-item').length) {
+                nextIndex = 0;
+            }
+            showSlide(nextIndex);
+        }, 5000);
+    }
 }

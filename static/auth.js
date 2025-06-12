@@ -11,6 +11,8 @@ document.addEventListener('DOMContentLoaded', function() {
                 form.classList.remove('active');
                 if (form.id === `${target}-form`) {
                     form.classList.add('active');
+                    const firstInput = form.querySelector('input');
+                    if (firstInput) firstInput.focus();
                 }
             });
         });
@@ -39,12 +41,33 @@ document.addEventListener('DOMContentLoaded', function() {
         if (usernameInput) {
             usernameInput.value = registeredUsername;
         }
-        // Switch to login tab
         const loginTab = document.querySelector('.auth-tab[data-tab="login"]');
         if (loginTab) {
             loginTab.click();
         }
     }
+
+    const logoutBtn = document.createElement('button');
+    logoutBtn.id = 'logout-btn';
+    logoutBtn.textContent = 'Đăng xuất';
+    logoutBtn.style.cssText = `
+        position: fixed;
+        top: 10px;
+        left: 10px;
+        padding: 0.5rem 1rem;
+        background: #ff6b6b;
+        color: white;
+        border: none;
+        border-radius: 4px;
+        cursor: pointer;
+    `;
+    logoutBtn.addEventListener('click', () => {
+        localStorage.removeItem('user');
+        showSuccess('Đã đăng xuất!');
+        setTimeout(() => {
+            window.location.href = '/';
+        }, 1500);
+    });
 
     if (loginForm) {
         loginForm.addEventListener('submit', function(e) {
@@ -75,6 +98,12 @@ document.addEventListener('DOMContentLoaded', function() {
             .then(data => {
                 console.log('Login response data:', data);
                 if (data.success) {
+                    // Save user data to localStorage
+                    const user = { username: data.username, user_id: data.user_id };
+                    localStorage.setItem('user', JSON.stringify(user));
+                    if (remember) {
+                        localStorage.setItem('rememberMe', 'true');
+                    }
                     showSuccess(data.message || 'Đăng nhập thành công!');
                     setTimeout(() => {
                         console.log('Redirecting to /index');
@@ -99,6 +128,11 @@ document.addEventListener('DOMContentLoaded', function() {
             const password = document.getElementById('register-password').value.trim();
             const confirmPassword = document.getElementById('register-confirm-password').value.trim();
             const agreeTerms = this.querySelector('input[type="checkbox"]').checked;
+
+            if (password.length < 8) {
+                showError('Mật khẩu phải có ít nhất 8 ký tự!');
+                return;
+            }
 
             if (!username || !email || !password || !confirmPassword) {
                 showError('Vui lòng điền đầy đủ thông tin');
@@ -266,4 +300,26 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
+
+    // Append logout button only if user is logged in
+    function checkAuthState() {
+        const user = JSON.parse(localStorage.getItem('user'));
+        const authButtons = document.querySelector('.auth-buttons');
+        const userProfile = document.querySelector('.user-profile');
+        if (user) {
+            if (authButtons) authButtons.style.display = 'none';
+            if (userProfile) {
+                userProfile.style.display = 'block';
+                const usernameSpan = userProfile.querySelector('.user-username');
+                if (usernameSpan) usernameSpan.textContent = user.username;
+            }
+            document.body.appendChild(logoutBtn);
+        } else {
+            if (authButtons) authButtons.style.display = 'flex';
+            if (userProfile) userProfile.style.display = 'none';
+            if (logoutBtn.parentNode) logoutBtn.remove();
+        }
+    }
+
+    checkAuthState();
 });

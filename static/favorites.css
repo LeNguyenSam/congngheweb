@@ -1,0 +1,313 @@
+/* Container */
+.favorites-container {
+    max-width: 1200px;
+    margin: 2rem auto;
+    padding: 0 1rem;
+}
+
+/* Header */
+.favorites-header {
+    margin-bottom: 2rem;
+}
+
+.favorites-header h1 {
+    color: var(--text-color);
+    font-size: 2rem;
+    margin: 0 0 1rem;
+}
+
+.favorites-stats {
+    display: flex;
+    gap: 1.5rem;
+    color: var(--text-secondary);
+}
+
+.favorites-stats span {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.favorites-stats i {
+    color: var(--primary-color);
+}
+
+/* Filter Section */
+.favorites-filter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    gap: 1rem;
+    flex-wrap: wrap;
+}
+
+.search-box {
+    position: relative;
+    flex: 1;
+    min-width: 250px;
+}
+
+.search-box input {
+    width: 100%;
+    padding: 0.75rem 1rem 0.75rem 2.5rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-color);
+}
+
+.search-box i {
+    position: absolute;
+    left: 1rem;
+    top: 50%;
+    transform: translateY(-50%);
+    color: var(--text-secondary);
+}
+
+.filter-options {
+    display: flex;
+    gap: 1rem;
+}
+
+.filter-options select {
+    padding: 0.75rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--input-bg);
+    color: var(--text-color);
+    cursor: pointer;
+}
+
+/* Grid View */
+.favorites-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+    gap: 2rem;
+    margin-bottom: 2rem;
+}
+
+/* List View */
+.favorites-grid.list-view {
+    grid-template-columns: 1fr;
+}
+
+.favorites-grid.list-view .novel-item {
+    display: flex;
+    gap: 1.5rem;
+}
+
+.favorites-grid.list-view .novel-cover {
+    width: 200px;
+    padding-top: 0;
+    height: 280px;
+}
+
+.favorites-grid.list-view .novel-info {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
+.novel-item {
+    background: var(--card-bg);
+    border-radius: 8px;
+    overflow: hidden;
+    box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+}
+
+.novel-item:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.15);
+}
+
+.novel-cover {
+    position: relative;
+    padding-top: 140%;
+}
+
+.novel-cover img {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+.novel-info {
+    padding: 1rem;
+}
+
+.novel-info h3 {
+    margin: 0 0 0.5rem;
+    color: var(--text-color);
+    font-size: 1.1rem;
+}
+
+.novel-meta {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 1rem;
+    margin-bottom: 1rem;
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+}
+
+.novel-meta span {
+    display: flex;
+    align-items: center;
+    gap: 0.25rem;
+}
+
+.novel-description {
+    font-size: 0.9rem;
+    color: var(--text-secondary);
+    margin-bottom: 1rem;
+    display: -webkit-box;
+    -webkit-line-clamp: 3;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+}
+
+.novel-actions {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.novel-actions button {
+    flex: 1;
+    padding: 0.5rem;
+    border: none;
+    border-radius: 4px;
+    background: var(--bg-color);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.novel-actions button:hover {
+    background: var(--hover-color);
+}
+
+.novel-actions button.remove {
+    background: #ff4444;
+    color: white;
+}
+
+.novel-actions button.remove:hover {
+    background: #cc0000;
+}
+
+/* Pagination */
+.pagination {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    gap: 1rem;
+    margin-top: 2rem;
+}
+
+.pagination-btn {
+    width: 40px;
+    height: 40px;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.pagination-btn:hover {
+    background: var(--hover-color);
+}
+
+.pagination-btn:disabled {
+    opacity: 0.5;
+    cursor: not-allowed;
+}
+
+.page-numbers {
+    display: flex;
+    gap: 0.5rem;
+}
+
+.page-number {
+    width: 40px;
+    height: 40px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: 1px solid var(--border-color);
+    border-radius: 6px;
+    background: var(--card-bg);
+    color: var(--text-color);
+    cursor: pointer;
+    transition: all 0.2s ease;
+}
+
+.page-number:hover {
+    background: var(--hover-color);
+}
+
+.page-number.active {
+    background: var(--primary-color);
+    color: white;
+    border-color: var(--primary-color);
+}
+
+/* Dark Mode */
+body.dark-mode .novel-item {
+    background: var(--dark-card-bg);
+}
+
+body.dark-mode .novel-actions button {
+    background: var(--dark-bg-color);
+}
+
+body.dark-mode .pagination-btn,
+body.dark-mode .page-number {
+    background: var(--dark-card-bg);
+    border-color: var(--dark-border-color);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .favorites-header {
+        text-align: center;
+    }
+
+    .favorites-stats {
+        justify-content: center;
+    }
+
+    .favorites-filter {
+        flex-direction: column;
+    }
+
+    .filter-options {
+        width: 100%;
+    }
+
+    .filter-options select {
+        flex: 1;
+    }
+
+    .favorites-grid {
+        grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+        gap: 1rem;
+    }
+
+    .favorites-grid.list-view .novel-item {
+        flex-direction: column;
+    }
+
+    .favorites-grid.list-view .novel-cover {
+        width: 100%;
+        height: auto;
+        padding-top: 140%;
+    }
+} 

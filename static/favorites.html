@@ -1,0 +1,93 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Truyện Yêu Thích</title>
+    <link rel="stylesheet" href="common.css">
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="favorites.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="nav">
+        <div class="nav-logo">
+            <a href="index.html">
+                <img src="./image/logo2.2.png" alt="Logo">
+            </a>
+        </div>
+        <div class="nav-left">
+            <a href="categories.html">Thể Loại</a>
+            <a href="new.html">Truyện Mới</a>
+            <a href="ranking.html">Xếp Hạng</a>
+            <a href="upload.html">Đăng Truyện</a>
+        </div>
+        <div class="nav-right">
+            <div class="user-profile">
+                <div class="user-avatar">
+                    <img src="./image/default-avatar.png" alt="Avatar">
+                </div>
+                <div class="user-dropdown">
+                    <a href="profile.html"><i class="fas fa-user"></i> Thông tin cá nhân</a>
+                    <a href="my-novels.html"><i class="fas fa-book"></i> Truyện của tôi</a>
+                    <a href="favorites.html" class="active"><i class="fas fa-heart"></i> Yêu thích</a>
+                    <a href="#" id="logout-btn"><i class="fas fa-sign-out-alt"></i> Đăng xuất</a>
+                </div>
+            </div>
+            <button class="dark-mode-toggle">
+                <i class="fas fa-moon"></i>
+            </button>
+        </div>
+    </nav>
+
+    <!-- Main Content -->
+    <main class="favorites-container">
+        <div class="favorites-header">
+            <h1>Truyện Yêu Thích</h1>
+            <div class="favorites-stats">
+                <span><i class="fas fa-heart"></i> 12 truyện</span>
+                <span><i class="fas fa-clock"></i> Cập nhật 2 giờ trước</span>
+            </div>
+        </div>
+
+        <div class="favorites-filter">
+            <div class="search-box">
+                <input type="text" placeholder="Tìm kiếm truyện yêu thích...">
+                <i class="fas fa-search"></i>
+            </div>
+            <div class="filter-options">
+                <select id="sort-filter">
+                    <option value="latest">Mới cập nhật</option>
+                    <option value="added">Mới thêm</option>
+                    <option value="name">Tên A-Z</option>
+                </select>
+                <select id="view-filter">
+                    <option value="grid">Dạng lưới</option>
+                    <option value="list">Dạng danh sách</option>
+                </select>
+            </div>
+        </div>
+
+        <div class="favorites-grid">
+            <!-- Novel items will be added dynamically -->
+        </div>
+
+        <div class="pagination">
+            <button class="pagination-btn" id="prev-page">
+                <i class="fas fa-chevron-left"></i>
+            </button>
+            <div class="page-numbers">
+                <span class="page-number active">1</span>
+                <span class="page-number">2</span>
+                <span class="page-number">3</span>
+            </div>
+            <button class="pagination-btn" id="next-page">
+                <i class="fas fa-chevron-right"></i>
+            </button>
+        </div>
+    </main>
+
+    <script src="favorites.js"></script>
+</body>
+</html> 

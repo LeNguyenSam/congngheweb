@@ -93,42 +93,42 @@ app.get('/write', function(request, response) {
 });
 
 app.post('/auth', async function(request, response) {
-    const { username, password } = request.body;
-    console.log('Login attempt for username:', username);
-    if (!username || !password) {
-        console.log('Missing username or password');
-        return response.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ thông tin!' });
-    }
+      const { username, password } = request.body;
+      console.log('Login attempt for username:', username);
+      if (!username || !password) {
+          console.log('Missing username or password');
+          return response.status(400).json({ success: false, message: 'Vui lòng nhập đầy đủ thông tin!' });
+      }
 
-    try {
-        connection.query('SELECT * FROM USER WHERE username = ?', [username], function(error, results) {
-            if (error) {
-                console.error('Database query error:', error);
-                return response.status(500).json({ success: false, message: 'Lỗi máy chủ: ' + error.message });
-            }
-            if (results.length === 0) {
-                console.log('Username not found:', username);
-                return response.json({ success: false, message: 'Tên người dùng không tồn tại!' });
-            }
+      try {
+          connection.query('SELECT * FROM USER WHERE username = ?', [username], function(error, results) {
+              if (error) {
+                  console.error('Database query error:', error);
+                  return response.status(500).json({ success: false, message: 'Lỗi máy chủ: ' + error.message });
+              }
+              if (results.length === 0) {
+                  console.log('Username not found:', username);
+                  return response.json({ success: false, message: 'Tên người dùng không tồn tại!' });
+              }
 
-            const user = results[0];
-            console.log('Found user:', user.username, 'with user_id:', user.user_id);
-            if (password === user.password) {
-                console.log('Password match, setting session for:', username);
-                request.session.loggedin = true;
-                request.session.username = username;
-                request.session.user_id = user.user_id;
-                response.json({ success: true, message: 'Đăng nhập thành công!' });
-            } else {
-                console.log('Password mismatch for:', username);
-                response.json({ success: false, message: 'Mật khẩu không đúng!' });
-            }
-        });
-    } catch (error) {
-        console.error('Authentication error:', error);
-        response.status(500).json({ success: false, message: 'Lỗi máy chủ: ' + error.message });
-    }
-});
+              const user = results[0];
+              console.log('Found user:', user.username, 'with user_id:', user.user_id);
+              if (password === user.password) {
+                  console.log('Password match, setting session for:', username);
+                  request.session.loggedin = true;
+                  request.session.username = username;
+                  request.session.user_id = user.user_id;
+                  response.json({ success: true, message: 'Đăng nhập thành công!', username: user.username, user_id: user.user_id });
+              } else {
+                  console.log('Password mismatch for:', username);
+                  response.json({ success: false, message: 'Mật khẩu không đúng!' });
+              }
+          });
+      } catch (error) {
+          console.error('Authentication error:', error);
+          response.status(500).json({ success: false, message: 'Lỗi máy chủ: ' + error.message });
+      }
+  });
 
 app.post('/register', async function(request, response) {
     const { username, email, password } = request.body;
