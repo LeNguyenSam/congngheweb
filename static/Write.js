@@ -36,11 +36,12 @@ function loadDraft() {
 function togglePreview() {
     const previewSection = document.getElementById('previewSection');
     const content = document.getElementById('chapterContent').value;
-    document.getElementById('previewContent').innerHTML = content.replace(/\n/g, '<br>');
+    document.getElementById('previewContent').innerHTML = content.replace(/\s*\n\s*/g, '<br>');
     previewSection.style.display = previewSection.style.display === 'none' ? 'block' : 'none';
 }
 
 function submitChapter() {
+    const novel_id = localStorage.getItem('novel_id');
     const title = document.getElementById('chapterTitle').value.trim();
     const content = document.getElementById('chapterContent').value.trim();
 
@@ -49,21 +50,33 @@ function submitChapter() {
         return;
     }
 
-    const storyId = localStorage.getItem('newStory') 
-        ? JSON.parse(localStorage.getItem('newStory')).id 
-        : Date.now();
-    const chapterData = {
-        storyId,
-        title,
-        content,
-        timestamp: new Date().toISOString()
-    };
-    const chapters = JSON.parse(localStorage.getItem('chapters') || '[]');
-    chapters.push(chapterData);
-    localStorage.setItem('chapters', JSON.stringify(chapters));
+    if (!novel_id) {
+        alert('Không tìm thấy ID truyện. Vui lòng tạo truyện trước!');
+        return;
+    }
 
-    localStorage.removeItem('draft');
-    window.location.href = 'index.html';
+    fetch('/submit-chapter', {
+        method: 'POST',
+        headers: {
+            'Content-Type': 'application/json'
+        },
+        body: JSON.stringify({ novel_id, title, content })
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server response:', data);
+        if (data.success) {
+            localStorage.removeItem('draft');
+            localStorage.removeItem('novel_id');
+            window.location.href = 'index.html';
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting chapter:', error);
+        alert('Lỗi khi gửi chương!');
+    });
 }
 
 function saveDraft() {
@@ -80,6 +93,7 @@ function saveDraft() {
 function setupButtonEvents() {
     document.querySelector('.submit').addEventListener('click', submitChapter);
     document.querySelector('.save').addEventListener('click', saveDraft);
+    document.querySelector('.preview').addEventListener('click', togglePreview);
 }
 
 window.addEventListener('load', initializeEditor);

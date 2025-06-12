@@ -61,15 +61,33 @@ document.getElementById('addStoryForm').addEventListener('submit', function(e) {
         return;
     }
 
-    // Lưu dữ liệu vào localStorage và chuyển hướng
-    const storyData = {
-        title: title,
-        description: description,
-        tags: tags,
-        image: image.name // Lưu tên file, vì nội dung file không thể lưu trực tiếp
-    };
-    localStorage.setItem('newStory', JSON.stringify(storyData));
-    window.location.href = 'Write.html';
+    // Prepare form data for server
+    const formData = new FormData();
+    formData.append('title', title);
+    formData.append('description', description);
+    formData.append('tags', JSON.stringify(tags));
+    formData.append('image', image);
+
+    // Send data to server with debug logging
+    console.log('Sending form data:', { title, description, tags, image: image.name });
+    fetch('/upload-story', {
+        method: 'POST',
+        body: formData
+    })
+    .then(response => response.json())
+    .then(data => {
+        console.log('Server response:', data);
+        if (data.success) {
+            localStorage.setItem('novel_id', data.novel_id);
+            window.location.href = 'Write.html';
+        } else {
+            alert(data.message);
+        }
+    })
+    .catch(error => {
+        console.error('Error submitting story:', error);
+        alert('Lỗi khi gửi dữ liệu truyện!');
+    });
 });
 
 document.querySelector('.cancel').addEventListener('click', function() {

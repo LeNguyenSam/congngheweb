@@ -132,161 +132,86 @@ document.addEventListener('DOMContentLoaded', function() {
         }
     });
 
-    // Initialize novels data
+    // Initialize novels data from server
     initializeNovels();
 });
 
 function initializeNovels() {
-    const carouselNovels = [
-        {
-            id: 'tokyo-ghoul',
-            title: 'Tokyo Ghoul',
-            cover: '/image/tokyo-ghoul.jpg',
-            link: 'novel-detail.html?id=tokyo-ghoul'
-        },
-        {
-            id: 'jujutsu-kaisen',
-            title: 'Jujutsu Kaisen',
-            cover: '/image/jujutsu-kaisen.jpg',
-            link: 'novel-detail.html?id=jujutsu-kaisen'
-        },
-        {
-            id: 'thang-4',
-            title: 'Tháng 4 Là Lời Nói Dối Của Em',
-            cover: '/image/thang-4.jpg',
-            link: 'novel-detail.html?id=thang-4'
-        }
-    ];
+    fetch('/novels')
+        .then(response => response.json())
+        .then(data => {
+            if (data.success) {
+                const novels = data.novels;
 
-    const recommendedNovels = [
-        {
-            id: 1,
-            title: 'Ta tu có thể giả tiên',
-            cover: '/image/novel1.jpg',
-            author: 'Tác Giả 1',
-            rating: 4.5,
-            views: 10000
-        },
-        {
-            id: 2,
-            title: 'Ta tại trong núi thành tiên',
-            cover: '/image/novel2.jpg',
-            author: 'Tác Giả 2',
-            rating: 4.8,
-            views: 15000
-        },
-        {
-            id: 3,
-            title: 'Mù lòa tróc đao mãn',
-            cover: '/image/novel3.jpg',
-            author: 'Tác giả 3',
-            rating: 4.2,
-            views: 8000
-        },
-        {
-            id: 4,
-            title: 'Không tiền tu cái gì tiên',
-            cover: '4',
-            cover: '/image/novel4.jpg',
-            author: 'Tác giả 4',
-            rating: 4.7,
-            views: 12000
-        }
-    ];
+                // Populate carousel with latest novels
+                const carouselInner = document.getElementById('carousel-inner');
+                const indicatorsContainer = document.getElementById('carousel-indicators');
+                if (carouselInner && indicatorsContainer) {
+                    carouselInner.innerHTML = '';
+                    indicatorsContainer.innerHTML = '';
+                    novels.slice(0, 3).forEach((novel, index) => {
+                        const item = document.createElement('div');
+                        item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
+                        item.innerHTML = `
+                            <a href="novel-detail.html?id=${novel.novel_id}">
+                                <img src="${novel.cover_image || '/image/default.jpg'}" alt="${novel.title}">
+                                <div class="carousel-caption">
+                                    <h3>${novel.title}</h3>
+                                </div>
+                            </a>
+                        `;
+                        carouselInner.appendChild(item);
 
-    const hotNovels = [
-        {
-            id: 5,
-            title: 'Kaoru Hana',
-            cover: '/image/Kaoru_Hana_wa_Rin_to_Saku-14e2f9e.jpg',
-            author: 'Tác Giả 5',
-            rating: 4.9,
-            views: 20000
-        },
-        {
-            id: 6,
-            title: 'Ta tu có thể giả tiên',
-            cover: '/image/novel1.jpg',
-            author: 'Tác Giả 6',
-            rating: 4.6,
-            views: 18000
-        },
-        {
-            id: 7,
-            title: 'Ta tại trong núi tu tiên',
-            cover: '/image/novel2.jpg',
-            author: 'Tác Giả 7',
-            rating: 4.4,
-            views: 16000
-        },
-        {
-            id: 8,
-            title: 'Mù lòa tróc đao nhân',
-            cover: '/image/novel3.jpg',
-            author: 'Tác Giả 8',
-            rating: 4.3,
-            views: 14000
-        }
-    ];
+                        const indicator = document.createElement('span');
+                        indicator.className = index === 0 ? 'active' : '';
+                        indicator.addEventListener('click', () => {
+                            showSlide(index);
+                            stopAutoSlide();
+                            startAutoSlide();
+                        });
+                        indicatorsContainer.appendChild(indicator);
+                    });
+                }
 
-    // Populate carousel
-    const carouselInner = document.getElementById('carousel-inner');
-    const indicatorsContainer = document.getElementById('carousel-indicators');
-    if (carouselInner && indicatorsContainer) {
-        carouselNovels.forEach((novel, index) => {
-            const item = document.createElement('div');
-            item.className = `carousel-item ${index === 0 ? 'active' : ''}`;
-            item.innerHTML = `
-                <a href="${novel.link}">
-                    <img src="${novel.cover}" alt="${novel.title}">
-                    <div class="carousel-caption">
-                        <h3>${novel.title}</h3>
-                    </div>
-                </a>
-            `;
-            carouselInner.appendChild(item);
+                // Display recommended novels
+                const recommendedGrid = document.querySelector('.recommended-novels .novels-grid');
+                if (recommendedGrid) {
+                    recommendedGrid.innerHTML = '';
+                    novels.slice(0, 4).forEach(novel => {
+                        const novelElement = createNovelElement(novel);
+                        recommendedGrid.appendChild(novelElement);
+                    });
+                }
 
-            const indicator = document.createElement('span');
-            indicator.className = index === 0 ? 'active' : '';
-            indicator.addEventListener('click', () => {
-                showSlide(index);
-                stopAutoSlide();
-                startAutoSlide();
-            });
-            indicatorsContainer.appendChild(indicator);
+                // Display hot novels
+                const hotGrid = document.querySelector('.hot-novels .novels-grid');
+                if (hotGrid) {
+                    hotGrid.innerHTML = '';
+                    novels.slice(4, 8).forEach(novel => {
+                        const novelElement = createNovelElement(novel);
+                        hotGrid.appendChild(novelElement);
+                    });
+                }
+            } else {
+                console.error('Error fetching novels:', data.message);
+            }
+        })
+        .catch(error => {
+            console.error('Error fetching novels:', error);
         });
-    }
-
-    // Display recommended novels
-    const recommendedGrid = document.querySelector('.recommended-novels .novels-grid');
-    if (recommendedGrid) {
-        recommendedNovels.forEach(novel => {
-            const novelElement = createNovelElement(novel);
-            recommendedGrid.appendChild(novelElement);
-        });
-    }
-
-    // Display hot novels
-    const hotGrid = document.querySelector('.hot-novels .novels-grid');
-    if (hotGrid) {
-        hotNovels.forEach(novel => {
-            const novelElement = createNovelElement(novel);
-            hotGrid.appendChild(novelElement);
-        });
-    }
 }
 
 function createNovelElement(novel) {
     const div = document.createElement('div');
     div.className = 'novel-item';
     div.innerHTML = `
-        <a href="novel-detail.html?id=${novel.id}">
-            <img src="${novel.cover}" alt="${novel.title}">
+        <a href="novel-detail.html?id=${novel.novel_id}">
+            <img src="${novel.cover_image || '/image/default.jpg'}" alt="${novel.title}">
             <div class="novel-info">
                 <div class="title">${novel.title}</div>
                 <div class="stats">
-                    <span><i class="fas fa-eye"></i> ${novel.views}</span>
-                    <span><i class="fas fa-heart"></i> ${novel.rating}</span>
+                    <span><i class="fas fa-eye"></i> ${novel.views || 0}</span>
+                    <span><i class="fas fa-heart"></i> ${novel.rating ? novel.rating.toFixed(1) : 'N/A'}</span>
                 </div>
             </div>
         </a>
