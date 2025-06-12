@@ -1,0 +1,91 @@
+//Script database copy vào MySQL để dùng
+
+-- Tạo cơ sở dữ liệu
+CREATE DATABASE IF NOT EXISTS `novel_db` DEFAULT CHARACTER SET utf8 COLLATE utf8_general_ci;
+SHOW DATABASES;
+USE novel_db;
+SHOW TABLES;
+DESCRIBE USER;
+SELECT * FROM USER;
+
+-- Bảng USER
+CREATE TABLE IF NOT EXISTS `USER` (
+  `user_id` INT NOT NULL AUTO_INCREMENT,
+  `username` VARCHAR(50) NOT NULL,
+  `password` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(100) NOT NULL,
+  `role` VARCHAR(50) DEFAULT 'user',
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  PRIMARY KEY (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Bảng CATEGORY
+CREATE TABLE IF NOT EXISTS `CATEGORY` (
+  `category_id` INT NOT NULL AUTO_INCREMENT,
+  `name` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`category_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Bảng NOVEL
+CREATE TABLE IF NOT EXISTS `NOVEL` (
+  `novel_id` INT NOT NULL AUTO_INCREMENT,
+  `description` TEXT,
+  `cover_image` VARCHAR(255),
+  `status` VARCHAR(50),
+  `created_at` DATETIME DEFAULT CURRENT_TIMESTAMP,
+  `updated_at` DATETIME DEFAULT NULL ON UPDATE CURRENT_TIMESTAMP,
+  `user_id` INT NOT NULL,
+  PRIMARY KEY (`novel_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Bảng CHAPTER
+CREATE TABLE IF NOT EXISTS `CHAPTER` (
+  `chapter_id` INT NOT NULL AUTO_INCREMENT,
+  `novel_id` INT NOT NULL,
+  `title` VARCHAR(255) NOT NULL,
+  `content` TEXT,
+  `chapter_number` INT NOT NULL,
+  PRIMARY KEY (`chapter_id`),
+  FOREIGN KEY (`novel_id`) REFERENCES `NOVEL` (`novel_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Bảng NOVEL_CATEGORY
+CREATE TABLE IF NOT EXISTS `NOVEL_CATEGORY` (
+  `novel_id` INT NOT NULL,
+  `category_id` INT NOT NULL,
+  PRIMARY KEY (`novel_id`, `category_id`),
+  FOREIGN KEY (`novel_id`) REFERENCES `NOVEL` (`novel_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`category_id`) REFERENCES `CATEGORY` (`category_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Bảng RATING
+CREATE TABLE IF NOT EXISTS `RATING` (
+  `rating_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `novel_id` INT NOT NULL,
+  `rating_value` DECIMAL(3,2) NOT NULL CHECK (rating_value >= 0 AND rating_value <= 5),
+  PRIMARY KEY (`rating_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`novel_id`) REFERENCES `NOVEL` (`novel_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Bảng COMMENT
+CREATE TABLE IF NOT EXISTS `COMMENT` (
+  `comment_id` INT NOT NULL AUTO_INCREMENT,
+  `user_id` INT NOT NULL,
+  `novel_id` INT NOT NULL,
+  `content` TEXT NOT NULL,
+  PRIMARY KEY (`comment_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`novel_id`) REFERENCES `NOVEL` (`novel_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
+
+-- Bảng BOOKMARK
+CREATE TABLE IF NOT EXISTS `BOOKMARK` (
+  `user_id` INT NOT NULL,
+  `novel_id` INT NOT NULL,
+  PRIMARY KEY (`user_id`, `novel_id`),
+  FOREIGN KEY (`user_id`) REFERENCES `USER` (`user_id`) ON DELETE CASCADE,
+  FOREIGN KEY (`novel_id`) REFERENCES `NOVEL` (`novel_id`) ON DELETE CASCADE
+) ENGINE=InnoDB DEFAULT CHARSET=utf8;
