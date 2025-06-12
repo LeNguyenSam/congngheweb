@@ -1,5 +1,4 @@
 document.addEventListener('DOMContentLoaded', function() {
-    // Tab switching
     const tabs = document.querySelectorAll('.auth-tab');
     const forms = document.querySelectorAll('.auth-form');
 
@@ -17,7 +16,6 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Password visibility toggle
     const toggleButtons = document.querySelectorAll('.toggle-password');
     toggleButtons.forEach(button => {
         button.addEventListener('click', () => {
@@ -30,147 +28,183 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form validation and submission
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
 
-    loginForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const username = document.getElementById('login-username').value.trim();
-        const password = document.getElementById('login-password').value.trim();
-        const remember = this.querySelector('input[type="checkbox"]').checked;
-
-        if (!username || !password) {
-            showError('Vui lòng điền đầy đủ thông tin');
-            return;
+    // Check for username in URL parameters to auto-fill after registration
+    const urlParams = new URLSearchParams(window.location.search);
+    const registeredUsername = urlParams.get('username');
+    if (registeredUsername) {
+        const usernameInput = document.getElementById('login-username');
+        if (usernameInput) {
+            usernameInput.value = registeredUsername;
         }
+        // Switch to login tab
+        const loginTab = document.querySelector('.auth-tab[data-tab="login"]');
+        if (loginTab) {
+            loginTab.click();
+        }
+    }
 
-        fetch('/auth', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, password })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+    if (loginForm) {
+        loginForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('login-username').value.trim();
+            const password = document.getElementById('login-password').value.trim();
+            const remember = this.querySelector('input[type="checkbox"]').checked;
+
+            if (!username || !password) {
+                showError('Vui lòng điền đầy đủ thông tin');
+                return;
             }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                showSuccess('Đăng nhập thành công!');
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-            } else {
-                showError(data.message || 'Đăng nhập thất bại!');
-            }
-        })
-        .catch(error => {
-            showError('Có lỗi xảy ra, vui lòng thử lại!');
-            console.error('Fetch error:', error);
+
+            console.log('Sending login request for username:', username);
+            fetch('/auth', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, password }),
+                credentials: 'include'
+            })
+            .then(response => {
+                console.log('Login response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Login response data:', data);
+                if (data.success) {
+                    showSuccess(data.message || 'Đăng nhập thành công!');
+                    setTimeout(() => {
+                        console.log('Redirecting to /index');
+                        window.location.href = '/index';
+                    }, 1500);
+                } else {
+                    showError(data.message || 'Đăng nhập thất bại!');
+                }
+            })
+            .catch(error => {
+                showError('Có lỗi xảy ra, vui lòng thử lại!');
+                console.error('Fetch error:', error);
+            });
         });
-    });
+    }
 
-    registerForm.addEventListener('submit', function(e) {
-        e.preventDefault();
-        const username = document.getElementById('register-username').value.trim();
-        const email = document.getElementById('register-email').value.trim();
-        const password = document.getElementById('register-password').value.trim();
-        const confirmPassword = document.getElementById('register-confirm-password').value.trim();
-        const agreeTerms = this.querySelector('input[type="checkbox"]').checked;
+    if (registerForm) {
+        registerForm.addEventListener('submit', function(e) {
+            e.preventDefault();
+            const username = document.getElementById('register-username').value.trim();
+            const email = document.getElementById('register-email').value.trim();
+            const password = document.getElementById('register-password').value.trim();
+            const confirmPassword = document.getElementById('register-confirm-password').value.trim();
+            const agreeTerms = this.querySelector('input[type="checkbox"]').checked;
 
-        if (!username || !email || !password || !confirmPassword) {
-            showError('Vui lòng điền đầy đủ thông tin');
-            return;
-        }
-
-        if (password !== confirmPassword) {
-            showError('Mật khẩu không khớp');
-            return;
-        }
-
-        if (!agreeTerms) {
-            showError('Vui lòng đồng ý với điều khoản sử dụng');
-            return;
-        }
-
-        fetch('/register', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ username, email, password })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+            if (!username || !email || !password || !confirmPassword) {
+                showError('Vui lòng điền đầy đủ thông tin');
+                return;
             }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                showSuccess('Đăng ký thành công!');
-                setTimeout(() => {
-                    window.location.href = 'index.html';
-                }, 1500);
-            } else {
-                showError(data.message || 'Đăng ký thất bại!');
+
+            if (password !== confirmPassword) {
+                showError('Mật khẩu không khớp');
+                return;
             }
-        })
-        .catch(error => {
-            showError('Có lỗi xảy ra, vui lòng thử lại!');
-            console.error('Fetch error:', error);
+
+            if (!agreeTerms) {
+                showError('Vui lòng đồng ý với điều khoản sử dụng');
+                return;
+            }
+
+            console.log('Sending register request for username:', username);
+            fetch('/register', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ username, email, password }),
+                credentials: 'include'
+            })
+            .then(response => {
+                console.log('Register response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Register response data:', data);
+                if (data.success) {
+                    showSuccess(data.message || 'Đăng ký thành công!');
+                    setTimeout(() => {
+                        console.log('Redirecting to login with username');
+                        window.location.href = data.redirect || `/?username=${encodeURIComponent(username)}`;
+                    }, 1500);
+                } else {
+                    showError(data.message || 'Đăng ký thất bại!');
+                }
+            })
+            .catch(error => {
+                showError('Có lỗi xảy ra, vui lòng thử lại!');
+                console.error('Fetch error:', error);
+            });
         });
-    });
+    }
 
-    // Forgot password handler
     const forgotPasswordLink = document.querySelector('.forgot-password');
-    forgotPasswordLink.addEventListener('click', (e) => {
-        e.preventDefault();
-        const email = document.getElementById('login-email')?.value?.trim() || '';
-        if (!email) {
-            showError('Vui lòng nhập email của bạn');
-            return;
-        }
-        fetch('/forgot-password', {
-            method: 'POST',
-            headers: { 'Content-Type': 'application/json' },
-            body: JSON.stringify({ email })
-        })
-        .then(response => {
-            if (!response.ok) {
-                throw new Error(`HTTP error! Status: ${response.status}`);
+    if (forgotPasswordLink) {
+        forgotPasswordLink.addEventListener('click', (e) => {
+            e.preventDefault();
+            const email = document.getElementById('login-email')?.value?.trim() || '';
+            if (!email) {
+                showError('Vui lòng nhập email của bạn');
+                return;
             }
-            return response.json();
-        })
-        .then(data => {
-            if (data.success) {
-                showSuccess('Yêu cầu đặt lại mật khẩu đã được gửi đến email của bạn');
-            } else {
-                showError(data.message || 'Gửi yêu cầu thất bại!');
-            }
-        })
-        .catch(error => {
-            showError('Có lỗi xảy ra, vui lòng thử lại!');
-            console.error('Fetch error:', error);
+            console.log('Sending forgot-password request for email:', email);
+            fetch('/forgot-password', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({ email }),
+                credentials: 'include'
+            })
+            .then(response => {
+                console.log('Forgot-password response status:', response.status);
+                if (!response.ok) {
+                    throw new Error(`HTTP error! Status: ${response.status}`);
+                }
+                return response.json();
+            })
+            .then(data => {
+                console.log('Forgot-password response data:', data);
+                if (data.success) {
+                    showSuccess(data.message || 'Yêu cầu đặt lại mật khẩu đã được gửi!');
+                } else {
+                    showError(data.message || 'Gửi yêu cầu thất bại!');
+                }
+            })
+            .catch(error => {
+                showError('Có lỗi xảy ra, vui lòng thử lại!');
+                console.error('Fetch error:', error);
+            });
         });
-    });
+    }
 
-    // Social login handlers
     const googleBtn = document.querySelector('.social-btn.google');
     const facebookBtn = document.querySelector('.social-btn.facebook');
 
-    googleBtn.addEventListener('click', () => {
-        console.log('Google login clicked');
-        showSuccess('Đang chuyển hướng đến Google...');
-    });
+    if (googleBtn) {
+        googleBtn.addEventListener('click', () => {
+            console.log('Google login clicked');
+            showSuccess('Đang chuyển hướng đến Google...');
+        });
+    }
 
-    facebookBtn.addEventListener('click', () => {
-        console.log('Facebook login clicked');
-        showSuccess('Đang chuyển hướng đến Facebook...');
-    });
+    if (facebookBtn) {
+        facebookBtn.addEventListener('click', () => {
+            console.log('Facebook login clicked');
+            showSuccess('Đang chuyển hướng đến Facebook...');
+        });
+    }
 
-    // Utility functions for showing messages
     function showError(message) {
+        console.log('Showing error:', message);
         const errorDiv = document.createElement('div');
         errorDiv.className = 'error-message';
         errorDiv.textContent = message;
@@ -190,6 +224,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 
     function showSuccess(message) {
+        console.log('Showing success:', message);
         const successDiv = document.createElement('div');
         successDiv.className = 'success-message';
         successDiv.textContent = message;
@@ -208,7 +243,6 @@ document.addEventListener('DOMContentLoaded', function() {
         setTimeout(() => successDiv.remove(), 3000);
     }
 
-    // Dark mode toggle
     const darkModeToggle = document.querySelector('.dark-mode-toggle');
     if (darkModeToggle) {
         const darkModeIcon = darkModeToggle.querySelector('i');
