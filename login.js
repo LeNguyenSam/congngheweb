@@ -6,7 +6,7 @@ const path = require('path');
 const connection = mysql.createConnection({
     host: 'localhost',
     user: 'root',
-    password: '', // Thay bằng mật khẩu MySQL của bạn nếu có
+    password: '',
     database: 'novel_db'
 });
 
