@@ -6,12 +6,8 @@ document.addEventListener('DOMContentLoaded', function() {
     tabs.forEach(tab => {
         tab.addEventListener('click', () => {
             const target = tab.dataset.tab;
-            
-            // Update active tab
             tabs.forEach(t => t.classList.remove('active'));
             tab.classList.add('active');
-            
-            // Show target form
             forms.forEach(form => {
                 form.classList.remove('active');
                 if (form.id === `${target}-form`) {
@@ -34,41 +30,56 @@ document.addEventListener('DOMContentLoaded', function() {
         });
     });
 
-    // Form validation
+    // Form validation and submission
     const loginForm = document.getElementById('login-form');
     const registerForm = document.getElementById('register-form');
 
     loginForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const email = document.getElementById('login-email').value;
-        const password = document.getElementById('login-password').value;
+        const username = document.getElementById('login-username').value.trim();
+        const password = document.getElementById('login-password').value.trim();
         const remember = this.querySelector('input[type="checkbox"]').checked;
 
-        // Basic validation
-        if (!email || !password) {
+        if (!username || !password) {
             showError('Vui lòng điền đầy đủ thông tin');
             return;
         }
 
-        // Here you would typically make an API call to your backend
-        console.log('Login attempt:', { email, password, remember });
-        
-        // Simulate successful login
-        showSuccess('Đăng nhập thành công!');
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1500);
+        fetch('/auth', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, password })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                showSuccess('Đăng nhập thành công!');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } else {
+                showError(data.message || 'Đăng nhập thất bại!');
+            }
+        })
+        .catch(error => {
+            showError('Có lỗi xảy ra, vui lòng thử lại!');
+            console.error('Fetch error:', error);
+        });
     });
 
     registerForm.addEventListener('submit', function(e) {
         e.preventDefault();
-        const username = document.getElementById('register-username').value;
-        const email = document.getElementById('register-email').value;
-        const password = document.getElementById('register-password').value;
-        const confirmPassword = document.getElementById('register-confirm-password').value;
+        const username = document.getElementById('register-username').value.trim();
+        const email = document.getElementById('register-email').value.trim();
+        const password = document.getElementById('register-password').value.trim();
+        const confirmPassword = document.getElementById('register-confirm-password').value.trim();
         const agreeTerms = this.querySelector('input[type="checkbox"]').checked;
 
-        // Basic validation
         if (!username || !email || !password || !confirmPassword) {
             showError('Vui lòng điền đầy đủ thông tin');
             return;
@@ -84,28 +95,64 @@ document.addEventListener('DOMContentLoaded', function() {
             return;
         }
 
-        // Here you would typically make an API call to your backend
-        console.log('Register attempt:', { username, email, password });
-        
-        // Simulate successful registration
-        showSuccess('Đăng ký thành công!');
-        setTimeout(() => {
-            window.location.href = 'index.html';
-        }, 1500);
+        fetch('/register', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ username, email, password })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                showSuccess('Đăng ký thành công!');
+                setTimeout(() => {
+                    window.location.href = 'index.html';
+                }, 1500);
+            } else {
+                showError(data.message || 'Đăng ký thất bại!');
+            }
+        })
+        .catch(error => {
+            showError('Có lỗi xảy ra, vui lòng thử lại!');
+            console.error('Fetch error:', error);
+        });
     });
 
     // Forgot password handler
     const forgotPasswordLink = document.querySelector('.forgot-password');
     forgotPasswordLink.addEventListener('click', (e) => {
         e.preventDefault();
-        const email = document.getElementById('login-email').value;
+        const email = document.getElementById('login-email')?.value?.trim() || '';
         if (!email) {
             showError('Vui lòng nhập email của bạn');
             return;
         }
-        // Here you would typically make an API call to your backend
-        console.log('Forgot password request for:', email);
-        showSuccess('Yêu cầu đặt lại mật khẩu đã được gửi đến email của bạn');
+        fetch('/forgot-password', {
+            method: 'POST',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ email })
+        })
+        .then(response => {
+            if (!response.ok) {
+                throw new Error(`HTTP error! Status: ${response.status}`);
+            }
+            return response.json();
+        })
+        .then(data => {
+            if (data.success) {
+                showSuccess('Yêu cầu đặt lại mật khẩu đã được gửi đến email của bạn');
+            } else {
+                showError(data.message || 'Gửi yêu cầu thất bại!');
+            }
+        })
+        .catch(error => {
+            showError('Có lỗi xảy ra, vui lòng thử lại!');
+            console.error('Fetch error:', error);
+        });
     });
 
     // Social login handlers
@@ -113,13 +160,11 @@ document.addEventListener('DOMContentLoaded', function() {
     const facebookBtn = document.querySelector('.social-btn.facebook');
 
     googleBtn.addEventListener('click', () => {
-        // Here you would implement Google OAuth
         console.log('Google login clicked');
         showSuccess('Đang chuyển hướng đến Google...');
     });
 
     facebookBtn.addEventListener('click', () => {
-        // Here you would implement Facebook OAuth
         console.log('Facebook login clicked');
         showSuccess('Đang chuyển hướng đến Facebook...');
     });
@@ -167,8 +212,6 @@ document.addEventListener('DOMContentLoaded', function() {
     const darkModeToggle = document.querySelector('.dark-mode-toggle');
     if (darkModeToggle) {
         const darkModeIcon = darkModeToggle.querySelector('i');
-
-        // Check for saved dark mode preference
         const savedDarkMode = localStorage.getItem('darkMode') === 'true';
         if (savedDarkMode) {
             document.body.classList.add('dark-mode');
@@ -180,8 +223,6 @@ document.addEventListener('DOMContentLoaded', function() {
             document.body.classList.toggle('dark-mode');
             const isDarkMode = document.body.classList.contains('dark-mode');
             localStorage.setItem('darkMode', isDarkMode);
-            
-            // Toggle icon
             if (isDarkMode) {
                 darkModeIcon.classList.remove('fa-moon');
                 darkModeIcon.classList.add('fa-sun');
@@ -191,4 +232,4 @@ document.addEventListener('DOMContentLoaded', function() {
             }
         });
     }
-}); 
+});

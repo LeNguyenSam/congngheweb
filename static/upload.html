@@ -3,31 +3,33 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Thêm Truyện Mới</title>
-    <link rel="stylesheet" href="../static/upload.css">
+    <title>Thêm Thông Tin Truyện</title>
+    <link rel="stylesheet" href="/upload.css">
 </head>
 <body>
-    <div>
+    <div class="container">
         <h1>Thêm Thông Tin Truyện</h1>
         <h2>Chi Tiết Truyện</h2>
         <form id="addStoryForm">
             <div class="form-group">
-                <label>Thêm trang bìa <span style="color: #888;"></span></label>
+                <label>Thêm trang bìa</label>
                 <div class="image-upload">
-                    <div class="image-placeholder" id="imagePreview"></div>
-                    <input type="file" accept="image/*" id="imageInput" onchange="previewImage(event)">
+                    <div class="image-placeholder" id="imagePreview">
+                        <span>Chọn ảnh</span>
+                    </div>
+                    <input type="file" id="imageInput" accept="image/jpeg,image/png,image/gif" onchange="previewImage(event)">
                 </div>
             </div>
             <div class="form-group">
                 <label>Tiêu đề</label>
-                <input type="text" placeholder="Tên truyện" required>
+                <input type="text" required>
             </div>
             <div class="form-group">
-                <label>Mô tả <span style="color: #888;"></span></label>
-                <textarea placeholder="Mô tả nội dung truyện..." required></textarea>
+                <label>Mô tả</label>
+                <textarea required></textarea>
             </div>
             <div class="form-group">
-                <label>Thể loại <span style="color: #888;"></span></label>
+                <label>Thể loại</label>
                 <div class="tag-group">
                     <label><input type="checkbox" name="tags" value="Ngôn tình"> Ngôn tình</label>
                     <label><input type="checkbox" name="tags" value="Huyền huyễn"> Huyền huyễn</label>
@@ -41,6 +43,6 @@
             </div>
         </form>
     </div>
-    <script src ="upload.js"></script>
+    <script src="/upload.js"></script>
 </body>
 </html>
